@@ -10,16 +10,13 @@ int main()
 	{
 		int value;
 		int level;
-		bool visited = false;
+        int x, y;
 		vector<Node*> neighbors;
-		int x, y;
 	};
 	
 	int n, m;
 	queue<Node> q;
-	//vector<pair<int, int>> dir = { {1,0}, {0,1}, {-1,0}, {0,-1} };
 	vector<pair<int, int>> dir = { {0,1}, {1,0}, {0,-1}, {-1,0} };
-	//vector<pair<int, int>> dir = { {0,1}, {1,0}, {1,0}, {0,-1} };
 	string s;
 	
 	// 인풋 데이터 받아서 배열로 만들기
@@ -55,18 +52,8 @@ int main()
 		}
 	}
 
-	/*for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			cout << " ((" << arr[i][j].x << ", " << arr[i][j].y << "), " << arr[i][j].value << ", " << arr[i][j].neighbors.size() << ")";
-		}
-		cout << endl;
-	}*/
-
 	// BFS
 	int level = 1;
-	arr[0][0].visited = true;
 	q.push(arr[0][0]);
 	while (!q.empty())
 	{
@@ -76,29 +63,19 @@ int main()
 			level++;
 		for (Node * neighbor : node.neighbors)
 		{
-			if (!neighbor->visited)
+			if (neighbor->level==0)
 			{
 				if (neighbor->x == n - 1 && neighbor->y == m - 1)
 				{
 					cout << level + 1;
 					return 0;
 				}
-				neighbor->visited = true;
 				neighbor->level = level + 1;
 				q.push(*neighbor);
 			}
 		}
 	}
 	cout << level;
-
-	/*for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			cout << " ((" << arr[i][j].x << ", " << arr[i][j].y << "), " << arr[i][j].value << ", " << arr[i][j].neighbors.size() << ", " << arr[i][j].level << ")";
-		}
-		cout << endl;
-	}*/
 	
 	return 0;
 }
