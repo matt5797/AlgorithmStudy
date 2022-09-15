@@ -1,0 +1,104 @@
+#include <iostream>
+#include <cstring>
+#include <queue>
+
+using namespace std;
+
+int main()
+{
+	struct Node
+	{
+		int value;
+		int level;
+		bool visited = false;
+		vector<Node*> neighbors;
+		int x, y;
+	};
+	
+	int n, m;
+	queue<Node> q;
+	//vector<pair<int, int>> dir = { {1,0}, {0,1}, {-1,0}, {0,-1} };
+	vector<pair<int, int>> dir = { {0,1}, {1,0}, {0,-1}, {-1,0} };
+	//vector<pair<int, int>> dir = { {0,1}, {1,0}, {1,0}, {0,-1} };
+	string s;
+	
+	// 인풋 데이터 받아서 배열로 만들기
+	cin >> n >> m;
+	Node** arr = new Node *[n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> s;
+		arr[i] = new Node[m];
+		for (int j = 0; j < m; j++)
+		{
+			arr[i][j].value = s[j] - '0';
+			arr[i][j].x = i;
+			arr[i][j].y = j;
+			arr[i][j].level = 0;
+		}
+	}
+	
+	// 그래프 만들기
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			for (pair<int, int> d : dir)
+			{
+				int x = i + d.first;
+				int y = j + d.second;
+				if (x >= 0 && x < n && y >= 0 && y < m && arr[x][y].value == 1)
+				{
+					arr[i][j].neighbors.push_back(&arr[x][y]);
+				}
+			}
+		}
+	}
+
+	/*for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			cout << " ((" << arr[i][j].x << ", " << arr[i][j].y << "), " << arr[i][j].value << ", " << arr[i][j].neighbors.size() << ")";
+		}
+		cout << endl;
+	}*/
+
+	// BFS
+	int level = 1;
+	arr[0][0].visited = true;
+	q.push(arr[0][0]);
+	while (!q.empty())
+	{
+		Node node = q.front();
+		q.pop();
+		if (node.level > level)
+			level++;
+		for (Node * neighbor : node.neighbors)
+		{
+			if (!neighbor->visited)
+			{
+				if (neighbor->x == n - 1 && neighbor->y == m - 1)
+				{
+					cout << level + 1;
+					return 0;
+				}
+				neighbor->visited = true;
+				neighbor->level = level + 1;
+				q.push(*neighbor);
+			}
+		}
+	}
+	cout << level;
+
+	/*for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			cout << " ((" << arr[i][j].x << ", " << arr[i][j].y << "), " << arr[i][j].value << ", " << arr[i][j].neighbors.size() << ", " << arr[i][j].level << ")";
+		}
+		cout << endl;
+	}*/
+	
+	return 0;
+}
