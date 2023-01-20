@@ -1,4 +1,4 @@
-from itertools import combinations, permutations, product
+from itertools import product
 
 def solution(users, emoticons):
     discounts = [10, 20, 30, 40]
