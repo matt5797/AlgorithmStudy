@@ -1,11 +1,8 @@
 #include <string>
 #include <vector>
-#include <iostream>
 #include <cstdlib>
 
 using namespace std;
-
-//vector<vector<char>> results;
 
 void DFS(vector<char> people, vector<char> result, vector<vector<char>> &results)
 {
