@@ -1,30 +1,29 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
+#include <vector>
+#include <cstdio>
+
 using namespace std;
 
-int main() {
+int main()
+{
     int N;
+    long long acc=0;
     cin >> N;
-    
-    vector<pair<long long, long long>> points(N);
-    for(int i = 0; i < N; i++) {
-        cin >> points[i].first >> points[i].second;
-    }
-    
-    long long area = 0;
-    for(int i = 0; i < N; i++) {
+
+    vector<pair<long long, long long>> v(N);
+    for (int i = 0; i<N; i++)
+        cin >> v[i].first >> v[i].second;
+
+    for (int i = 0; i<N; i++)
+    {
         int j = (i + 1) % N;
-        area += points[i].first * points[j].second;
-        area -= points[j].first * points[i].second;
+        acc += v[i].first * v[j].second - v[j].first * v[i].second;
     }
+
+    double result = abs(acc) / 2.0;
     
-    area = abs(area);
-    double result = area / 2.0;
-    
-    cout << fixed;
-    cout.precision(1);
-    cout << result << endl;
-    
+    printf("%.1f\n", result);
+
     return 0;
 }
